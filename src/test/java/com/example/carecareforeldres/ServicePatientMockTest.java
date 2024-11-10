@@ -32,7 +32,7 @@ public class ServicePatientMockTest {
     MedecinRepository medecinRepository;
     @MockBean
     InfrimerRepository infrimerRepository;
-    @Autowired
+    @InjectMocks
     ServicePatient servicePatient;
     @Test
     public void testAssignPNerastatientToAmbulance() {
