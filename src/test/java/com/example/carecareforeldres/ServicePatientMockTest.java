@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.mockito.InjectMocks;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.Optional;
@@ -33,7 +33,7 @@ public class ServicePatientMockTest {
     MedecinRepository medecinRepository;
     @MockBean
     InfrimerRepository infrimerRepository;
-    @InjectMocks
+    @Autowired
     ServicePatient servicePatient;
     @Test
     public void testAssignPNerastatientToAmbulance() {
