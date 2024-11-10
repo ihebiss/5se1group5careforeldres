@@ -39,6 +39,7 @@ public class SecurityConfiguration {
                     req
                             //.requestMatchers("/auth/**").permitAll() // Autoriser les requêtes à /auth/**
                             .requestMatchers("/**").permitAll() // Autoriser les requêtes à /auth/**
+                            .antMatchers("/actuator/prometheus").permitAll() // Autoriser l'accès à l'endpoint Prometheus
                             //.requestMatchers("/**").hasAnyRole(Role.ADMIN.name(), Role.user.name())
                             .anyRequest().authenticated()
             )
