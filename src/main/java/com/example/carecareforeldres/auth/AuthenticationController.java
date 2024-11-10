@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 
-@CrossOrigin(origins = "http://192.168.177.128:4200", allowedHeaders = "*")
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
