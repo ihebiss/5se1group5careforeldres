@@ -2,103 +2,127 @@ package com.example.carecareforeldres;
 
 import com.example.carecareforeldres.Entity.*;
 import com.example.carecareforeldres.Repository.*;
-import com.example.carecareforeldres.Service.*;
+import com.example.carecareforeldres.Service.ServicePatient;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.beans.factory.annotation.Autowired;
-
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+
 @Slf4j
 @ExtendWith(MockitoExtension.class)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 public class ServicePatientMockTest {
+
     @MockBean
-    AmbulanceRepository ambulanceRepository;
+    private AmbulanceRepository ambulanceRepository;
+
     @MockBean
-    PatientRepository patientRepository;
+    private PatientRepository patientRepository;
+
     @MockBean
-    EtablissementRepository etablissementRepository;
+    private EtablissementRepository etablissementRepository;
+
     @MockBean
-    MedecinRepository medecinRepository;
+    private MedecinRepository medecinRepository;
+
     @MockBean
-    InfrimerRepository infrimerRepository;
+    private InfrimerRepository infrimerRepository;
+
     @Autowired
-    ServicePatient servicePatient;
-    @Test
-    public void testAssignPNerastatientToAmbulance() {
-        Ambulance ambulance = Ambulance.builder().idAmb(1L).busy(false).x(16.08).y(22.0).marque("VW").matricule("245TUN1999").build();
-        Mockito.when(ambulanceRepository.findById(1L)).thenReturn(Optional.ofNullable(ambulance));
-        Mockito.when(ambulanceRepository.save(Mockito.any(Ambulance.class))).thenReturn(ambulance);
+    private ServicePatient servicePatient;
 
-        Patient patient = Patient.builder().idpatient(1).nom("Mohamed Amine ").x(56.78).y(9.0).prenom("Brahmi").typatient(TypePatient.URGENT).build();
-        Mockito.when(patientRepository.findById(1)).thenReturn(Optional.ofNullable(patient));
-        Mockito.when(patientRepository.save(Mockito.any(Patient.class))).thenReturn(patient);
+    private Ambulance ambulance;
+    private Patient patient;
+    private Etablissement etablissement;
+    private Medecin medecin;
+    private Infermier infermier;
 
-        Patient patientToTest = servicePatient.AssignPatientToAmbulance(1, 1L);
+    @BeforeEach
+    public void setUp() {
+        ambulance = Ambulance.builder()
+                .idAmb(1L)
+                .busy(false)
+                .x(16.08)
+                .y(22.0)
+                .marque("VW")
+                .matricule("245TUN1999")
+                .build();
 
-        log.info("état du Patient  "+ patientToTest.getTypatient());
-        log.info("Id du Ambulance Initial " + ambulance.getIdAmb());
-        log.info("Id  Ambulance Patient  " + patientToTest.getAmbulance().getIdAmb());
+        patient = Patient.builder()
+                .idpatient(1)
+                .nom("Mohamed Amine")
+                .x(56.78)
+                .y(9.0)
+                .prenom("Brahmi")
+                .typatient(TypePatient.URGENT)
+                .build();
 
-        Assertions.assertEquals(TypePatient.URGENT, patientToTest.getTypatient());
-        Assertions.assertEquals(ambulance.getIdAmb(), patientToTest.getAmbulance().getIdAmb());
-        Assertions.assertTrue(patientToTest.getAmbulance().getBusy());
+        etablissement = Etablissement.builder()
+                .idEtab(1L)
+                .nomEtab("Clinique Al Majed")
+                .nbLits(5)
+                .build();
 
-        Mockito.verify(ambulanceRepository).save(Mockito.any(Ambulance.class));
-        Mockito.verify(patientRepository).save(Mockito.any(Patient.class));
+        medecin = Medecin.builder()
+                .idMedecin(1)
+                .nom("Ok")
+                .prenom("CC")
+                .build();
 
-
-        Etablissement etablissement = Etablissement.builder().idEtab(1L).nomEtab("Clinique Al Majed").nbLits(5).build();
-        Mockito.when(etablissementRepository.findById(1L)).thenReturn(Optional.ofNullable(etablissement));
-        Mockito.when(etablissementRepository.save(Mockito.any(Etablissement.class))).thenReturn(etablissement);
-
-
-        Medecin medecin = Medecin.builder().idMedecin(1).nom("Ok").prenom("CC").build();
-        Mockito.when(medecinRepository.findById(1)).thenReturn(Optional.ofNullable(medecin));
-        Mockito.when(medecinRepository.save(Mockito.any(Medecin.class))).thenReturn(medecin);
-
-        Infermier infermier = Infermier.builder().idInfermier(1).nom("Infermier").prenom("YYYYYY").build();
-        Mockito.when(infrimerRepository.findById(1)).thenReturn(Optional.ofNullable(infermier));
-        Mockito.when(infrimerRepository.save(Mockito.any(Infermier.class))).thenReturn(infermier);
-
-
-
-        Patient updatedPatient = servicePatient.UnassignPatientFromAmbulanceAndAffectToEtab(1,1L,1,1);
-
-
-
-        Assertions.assertEquals(etablissement.getIdEtab(), updatedPatient.getEtablissement().getIdEtab());
-        Assertions.assertEquals(updatedPatient.getMedecin().getIdMedecin(), medecin.getIdMedecin());
-        Assertions.assertEquals(updatedPatient.getInfermier().getIdInfermier(), infermier.getIdInfermier());
-        Assertions.assertEquals(4, etablissementRepository.findById(etablissement.getIdEtab()).get().getNbLits());
-
-        log.info("nbr Lits "+etablissementRepository.findById(etablissement.getIdEtab()).get().getNbLits());
-
-        log.info("ID Med Init "+ medecin.getIdMedecin());
-        log.info("ID Med Affecté  "+ updatedPatient.getMedecin().getIdMedecin());
-
-        log.info("ID Inf Init "+ infermier.getIdInfermier());
-        log.info("ID Inf Affecté  "+ updatedPatient.getInfermier().getIdInfermier());
-
-        log.info("ID Etab Init "+ etablissement.getIdEtab());
-        log.info("ID Etab Affecté  "+ updatedPatient.getEtablissement().getIdEtab());
-
-        Mockito.verify(etablissementRepository).save(Mockito.any(Etablissement.class));
-        Mockito.verify(medecinRepository).save(Mockito.any(Medecin.class));
-        Mockito.verify(infrimerRepository).save(Mockito.any(Infermier.class));
-
-
+        infermier = Infermier.builder()
+                .idInfermier(1)
+                .nom("Infermier")
+                .prenom("YYYYYY")
+                .build();
     }
 
+    @Test
+    public void testAssignPatientToAmbulance() {
+        Mockito.when(ambulanceRepository.findById(1L)).thenReturn(Optional.of(ambulance));
+        Mockito.when(patientRepository.findById(1)).thenReturn(Optional.of(patient));
+        Mockito.when(ambulanceRepository.save(any(Ambulance.class))).thenReturn(ambulance);
+        Mockito.when(patientRepository.save(any(Patient.class))).thenReturn(patient);
+
+        Patient resultPatient = servicePatient.AssignPatientToAmbulance(1, 1L);
+
+        assertEquals(TypePatient.URGENT, resultPatient.getTypatient());
+        assertEquals(ambulance.getIdAmb(), resultPatient.getAmbulance().getIdAmb());
+        assertTrue(resultPatient.getAmbulance().getBusy());
+
+        verify(ambulanceRepository).save(any(Ambulance.class));
+        verify(patientRepository).save(any(Patient.class));
+    }
+
+    @Test
+    public void testUnassignPatientFromAmbulanceAndAffectToEtab() {
+        Mockito.when(patientRepository.findById(1)).thenReturn(Optional.of(patient));
+        Mockito.when(etablissementRepository.findById(1L)).thenReturn(Optional.of(etablissement));
+        Mockito.when(medecinRepository.findById(1)).thenReturn(Optional.of(medecin));
+        Mockito.when(infrimerRepository.findById(1)).thenReturn(Optional.of(infermier));
+        Mockito.when(etablissementRepository.save(any(Etablissement.class))).thenReturn(etablissement);
+        Mockito.when(patientRepository.save(any(Patient.class))).thenReturn(patient);
+
+        Patient resultPatient = servicePatient.UnassignPatientFromAmbulanceAndAffectToEtab(1, 1L, 1, 1);
+
+        assertEquals(etablissement.getIdEtab(), resultPatient.getEtablissement().getIdEtab());
+        assertEquals(medecin.getIdMedecin(), resultPatient.getMedecin().getIdMedecin());
+        assertEquals(infermier.getIdInfermier(), resultPatient.getInfermier().getIdInfermier());
+        assertEquals(4, etablissement.getNbLits());
+
+        verify(etablissementRepository).save(any(Etablissement.class));
+        verify(patientRepository).save(any(Patient.class));
+        verify(medecinRepository).findById(1);
+        verify(infrimerRepository).findById(1);
+    }
 }
