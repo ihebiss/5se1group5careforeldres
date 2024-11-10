@@ -58,7 +58,6 @@ public class ServicePatient implements IServicePatient {
 
     @Override
     public Patient AssignPatientToAmbulance(Integer idpatient, Long idAmb) {
-        idAmb=ambulanceRepository.findAmbulance().get(0).getIdAmb();
         Ambulance ambulance=ambulanceRepository.findById(idAmb).get();
         Patient patient=patientReopository.findById(idpatient).get();
         if (patient.getTypatient()== TypePatient.URGENT&&ambulance.getBusy()==false){
