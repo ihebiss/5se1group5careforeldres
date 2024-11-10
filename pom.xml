@@ -245,7 +245,7 @@
         </execution>
     </executions>
     <configuration>
-        <formats>Html, Xml</formats>
+        <formats>HTML</formats>
         <outputDirectory>${project.build.directory}/dependency-check-report</outputDirectory>
     </configuration>
 </plugin>
