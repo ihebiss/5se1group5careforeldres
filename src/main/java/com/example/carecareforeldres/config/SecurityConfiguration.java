@@ -58,7 +58,7 @@ public class SecurityConfiguration {
 
   private CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(Arrays.asList("http://192.168.233.128:4200")); // Autoriser le frontend Angular
+    configuration.setAllowedOrigins(Arrays.asList("http://192.168.107.129:4200")); // Autoriser le frontend Angular
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
     configuration.setExposedHeaders(Arrays.asList("Authorization"));
