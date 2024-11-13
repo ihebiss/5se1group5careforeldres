@@ -186,16 +186,21 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
    
-        <plugin>
+            <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.7</version>
+            <version>0.8.7</version> <!-- Utilisez la version appropriée -->
             <executions>
                 <execution>
                     <goals>
-                        <goal>prepare-agent</goal>
-                        <goal>report</goal>
+                        <goal>prepare-agent</goal> <!-- Prépare l'agent JaCoCo pour l'analyse -->
                     </goals>
+                </execution>
+                <execution>
+                    <goals>
+                        <goal>report</goal> <!-- Génère le rapport après les tests -->
+                    </goals>
+                    <phase>prepare-package</phase> <!-- Assurez-vous que le rapport est généré après le test -->
                 </execution>
             </executions>
         </plugin>
