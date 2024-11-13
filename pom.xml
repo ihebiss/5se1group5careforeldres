@@ -201,12 +201,7 @@
             <goals>
                 <goal>report</goal>
             </goals>
-            <configuration>
-                <reports>
-                    <report>xml</report> <!-- Ajout du rapport XML -->
-                </reports>
-                <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
-            </configuration>
+           
         </execution>
     </executions>
 </plugin>
