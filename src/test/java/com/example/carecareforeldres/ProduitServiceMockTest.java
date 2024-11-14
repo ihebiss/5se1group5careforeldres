@@ -63,7 +63,7 @@ public class ProduitServiceMockTest {
         Assertions.assertEquals(produit1, produitLePlusRentable);
 
         // Vérification des interactions avec les mocks
-        Mockito.verify(produitRepository).findById(1L);
+       Mockito.verify(produitRepository, Mockito.times(2)).findById(1L);
         Mockito.verify(produitRepository).findById(2L);
         Mockito.verify(produitRepository).findById(3L);
         Mockito.verify(commandeRepository).findAll();
