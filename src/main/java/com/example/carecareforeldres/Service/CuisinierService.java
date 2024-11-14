@@ -86,7 +86,7 @@ public List<Cuisinier>top2Score(){
                     c.setDisponiblee(Boolean.TRUE);
                     c.setSalaire((float) (c.getSalaire() * 1.1));
                    User user=userRepository.findById(c.getIdC()).get();
-                 sendWhatsAppMessage(user.getNtelephone(), "Votre score est le plus élevé!");
+                 //sendWhatsAppMessage(user.getNtelephone(), "Votre score est le plus élevé!");
 
                     cuisinierRepository.save(c);
                 } else {
