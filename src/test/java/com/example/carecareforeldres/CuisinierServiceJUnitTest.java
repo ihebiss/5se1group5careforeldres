@@ -59,7 +59,7 @@ public class CuisinierServiceJUnitTest {
         when(restaurantRepository.findAll()).thenReturn(restaurants);
         when(cuisinierRepository.save(any(Cuisinier.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(userRepository.findById(anyInt())).thenReturn(Optional.of(new User()));
-        
+
     }
 
     @Test
@@ -69,7 +69,7 @@ public class CuisinierServiceJUnitTest {
         verify(restaurantRepository, times(1)).findAll();
         verify(cuisinierRepository, atLeastOnce()).save(any(Cuisinier.class));
         verify(userRepository, atLeastOnce()).findById(anyInt());
-        
+
     }
 
 }
