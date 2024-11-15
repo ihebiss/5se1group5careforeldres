@@ -30,7 +30,7 @@ public class AideService implements  IAideService {
         Stock stock = stockRepository.findById(idStock)
                 .orElseThrow(() -> new NullPointerException("stock not found"));
 
-        // Vérifier si le stock a suffisamment de ressources disponibles
+     
         if (!isStockSufficient(stock, aide)) {
             throw new IllegalArgumentException("Stock insuffisant pour l'aide demandée.");
         }
@@ -68,24 +68,21 @@ public class AideService implements  IAideService {
         }
     }
 
-    // Vérifie si le stock a suffisamment de ressources pour l'aide
     private boolean isStockSufficient(Stock stock, Aide aide) {
-        // Mettre à jour l'état de saturation du stock avant de vérifier la suffisance
-
         if (stock.isSaturated()) {
-            return false; // Si le stock est saturé, retourner faux directement
+            return false;         
         }
 
         switch (aide.getTypeAide()) {
             case MONEY:
-                return (stock.getFunds() + aide.getMontant()) <= stock.getFundsLimit(); // Vérifier si l'ajout respecte la limite des fonds
+                return (stock.getFunds() + aide.getMontant()) <= stock.getFundsLimit(); 
             case CLOTHES:
-                return (stock.getCapacite() + aide.getQuantiteClothes()) <= stock.getClothesLimit(); // Vérifier la limite des vêtements
+                return (stock.getCapacite() + aide.getQuantiteClothes()) <= stock.getClothesLimit(); 
             case MEDICAMENT:
-                return (stock.getCapacite() + aide.getQuantiteMedication()) <= stock.getMedicationLimit(); // Vérifier la limite des médicaments
+                return (stock.getCapacite() + aide.getQuantiteMedication()) <= stock.getMedicationLimit(); 
             case VOLUNTEER_HOURS:
-                // Vérifier si la date et l'heure des heures de bénévolat sont appropriées
-                return areVolunteerHoursValid(stock, aide); // Appeler la méthode pour valider les heures de bénévolat
+               
+                return areVolunteerHoursValid(stock, aide); 
             case ADDITIONAL_SPACE:
                 return true;
             default:
@@ -93,20 +90,20 @@ public class AideService implements  IAideService {
         }
     }
 
-    // Met à jour la capacité du stock après l'ajout d'une aide
+  
     private void updateStockResources(Stock stock, Aide aide) {
         switch (aide.getTypeAide()) {
             case MONEY:
-                // Check if montant is null and only update if it is not null
+               
                 if (aide.getMontant() != null) {
                     stock.setFunds(stock.getFunds() + aide.getMontant());
                 } else {
                     log.info("Montant est null. Stock non modifié pour les fonds.");
                 }
-                break; // Added break to prevent fall-through
+                break; 
 
             case CLOTHES:
-                // Check if quantiteMedication is null before updating capacity
+               
                 if (aide.getQuantiteClothes() != null) {
                     stock.setCapacite(stock.getCapacite() + aide.getQuantiteClothes());
                 } else {
@@ -115,7 +112,7 @@ public class AideService implements  IAideService {
                 break;
 
             case MEDICAMENT:
-                // Check if quantiteMedication is null before updating capacity
+               
                 if (aide.getQuantiteMedication() != null) {
                     stock.setCapacite(stock.getCapacite() + aide.getQuantiteMedication());
                 } else {
@@ -124,14 +121,14 @@ public class AideService implements  IAideService {
                 break;
 
             case ADDITIONAL_SPACE:
-                // This action does not depend on null values
+                
                 stock.setTotalSpaces(stock.getTotalSpaces() + 1);
                 break;
 
             default:
                 break;
         }
-        stockRepository.save(stock); // Sauvegarder les modifications apportées au stock
+        stockRepository.save(stock); 
     }
 
     private boolean areVolunteerHoursValid(Stock stock, Aide aide) {
