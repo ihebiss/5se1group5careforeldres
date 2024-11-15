@@ -184,18 +184,31 @@
         <plugins>
 
 
-    <plugin>
+
+        <plugin>
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-maven</artifactId>
+            <version>6.0.3</version>
             <executions>
                 <execution>
                     <goals>
-                        <goal>check</goal> <!-- Le but check pour scanner les dépendances -->
+                        <goal>check</goal>
                     </goals>
+                    <configuration>
+                        <!-- Spécifie où générer les rapports -->
+                        <reportFile>${project.build.directory}/dependency-check-report.html</reportFile>
+                        <!-- Choisir le format du rapport : HTML, XML, JSON -->
+                        <format>HTML</format>
+                        <!-- Désactiver le téléchargement de la base de données -->
+                        <disableUpdate>true</disableUpdate>
+                        <!-- Désactiver la conservation de la base de données -->
+                        <dataDirectory>${project.build.directory}/dependency-check-data</dataDirectory>
+                        <scanDependencies>false</scanDependencies>
+                    </configuration>
                 </execution>
             </executions>
         </plugin>
-
+ 
 
 
                  
