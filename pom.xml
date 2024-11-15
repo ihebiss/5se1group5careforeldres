@@ -199,17 +199,18 @@
     <build>
         <plugins>
 <plugin>
-    <groupId>org.owasp</groupId>
-    <artifactId>dependency-check-maven</artifactId>
-    <version>7.0.4</version>
+    <groupId>io.snyk</groupId>
+    <artifactId>snyk-maven-plugin</artifactId>
+    <version>3.0.1</version>
     <executions>
         <execution>
             <goals>
-                <goal>check</goal>
+                <goal>test</goal>
             </goals>
         </execution>
     </executions>
 </plugin>
+
 
 
 
