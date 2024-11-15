@@ -41,14 +41,13 @@ public class CuisinierServiceJUnitTest {
         chef.setIdC(1);
         chef.setScore(10);
         chef.setPlats(new ArrayList<>());
-        chef.setSalaire(1000.0f);  // Initialiser le salaire
+        chef.setSalaire(1000.0f);  
 
         Cuisinier autreCuisinier = new Cuisinier();
         autreCuisinier.setIdC(2);
         autreCuisinier.setScore(5);
         autreCuisinier.setPlats(new ArrayList<>());
-        autreCuisinier.setSalaire(800.0f);  // Initialiser le salaire
-
+        autreCuisinier.setSalaire(800.0f);  
         cuisiniers = Arrays.asList(chef, autreCuisinier);
 
         Restaurant restaurant = new Restaurant();
