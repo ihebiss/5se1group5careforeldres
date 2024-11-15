@@ -182,21 +182,19 @@
 
     <build>
         <plugins>
- <plugin>
-            <groupId>io.snyk</groupId>
-            <artifactId>snyk-maven-plugin</artifactId>
-            <version>3.0.1</version>
+
+
+    <plugin>
+            <groupId>org.owasp</groupId>
+            <artifactId>dependency-check-maven</artifactId>
             <executions>
                 <execution>
                     <goals>
-                        <goal>test</goal>
+                        <goal>check</goal> <!-- Le but check pour scanner les dépendances -->
                     </goals>
-                    <phase>verify</phase>
                 </execution>
             </executions>
         </plugin>
-
-
 
 
 
@@ -258,12 +256,7 @@
     </build>
 
 
-         <repositories>
-    <repository>
-        <id>snyk</id>
-        <url>https://repo.snyk.io/maven/</url>
-    </repository>
-</repositories>
+
          
 <distributionManagement>
         <repository>
