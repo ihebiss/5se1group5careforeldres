@@ -171,7 +171,7 @@ public class AideServiceTest {
                 .maxVolunteerHoursPerEvent(3)
                 .build();
         stock = stockRepository.save(stock);
-        LocalDateTime volunteerDateTime = LocalDateTime.of(2025, 12, 12, 0, 0); // This sets the time to midnight
+        LocalDateTime volunteerDateTime = LocalDateTime.of(2025, 12, 12, 0, 0); 
 
         Aide aideVolunteerHours = createVolunteerHoursAide(2F, volunteerDateTime);
 
