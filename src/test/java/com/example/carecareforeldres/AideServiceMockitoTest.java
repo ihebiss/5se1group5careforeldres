@@ -42,7 +42,7 @@ public class AideServiceMockitoTest {
 
     @Test
     public void testAddMoneyAide() {
-        // Configurer les données de test
+     
         Stock stock = Stock.builder()
                 .idStock(66L)
                 .title("Aide Financière")
@@ -60,17 +60,17 @@ public class AideServiceMockitoTest {
 
         when(aideRepository.save(any(Aide.class))).thenReturn(aideMoney);
 
-        // Appel de la méthode à tester
+        
         Aide savedAide = aideService.addAideeee(aideMoney, stock.getIdStock());
 
-        // Vérifications
+       
         Assertions.assertEquals(TypeAide.MONEY, savedAide.getTypeAide());
         Assertions.assertEquals(66L, savedAide.getStock().getIdStock());
         Assertions.assertEquals(2000.0f, savedAide.getStock().getFunds());
         Assertions.assertTrue(stock.getFundsLimit() > savedAide.getStock().getFunds());
         Assertions.assertEquals(1000.0f, savedAide.getMontant());
 
-        // Vérification que les méthodes mockées ont été appelées
+       
         verify(stockRepository).findById(66L);
         verify(aideRepository).save(any(Aide.class));
     }
