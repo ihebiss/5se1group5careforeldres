@@ -3,41 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivy Vulnerability Report</title>
+    <title>Trivy Scan Report</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 8px 12px; border: 1px solid #ddd; }
-        th { background-color: #f4f4f4; }
-        h1 { color: #333; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; color: #333; }
+        .container { width: 80%; margin: 20px auto; }
+        h1 { text-align: center; color: #555; }
+        .summary, .vulnerabilities { margin-top: 20px; }
+        .summary table, .vulnerabilities table { width: 100%; border-collapse: collapse; }
+        table, th, td { border: 1px solid #ccc; padding: 8px; }
+        th { background-color: #f0f0f5; }
+        .critical { background-color: #ffdddd; }
+        .high { background-color: #ffe6cc; }
+        .severity { font-weight: bold; }
     </style>
 </head>
 <body>
-    <h1>Trivy Vulnerability Report</h1>
-    {{ range .Results }}
-    <h2>Target: {{ .Target }}</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Vulnerability</th>
-                <th>Severity</th>
-                <th>Package</th>
-                <th>Installed Version</th>
-                <th>Fixed Version</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{ range .Vulnerabilities }}
-            <tr>
-                <td>{{ .VulnerabilityID }}</td>
-                <td>{{ .Severity }}</td>
-                <td>{{ .PkgName }}</td>
-                <td>{{ .InstalledVersion }}</td>
-                <td>{{ .FixedVersion }}</td>
-            </tr>
-            {{ end }}
-        </tbody>
-    </table>
-    {{ end }}
+    <div class="container">
+        <h1>Trivy Scan Report</h1>
+
+        <div class="summary">
+            <h2>Scan Summary</h2>
+            <table>
+                <tr><th>Artifact</th><td>{{ .ArtifactName }}</td></tr>
+                <tr><th>Scan Date</th><td>{{ .CreatedAt }}</td></tr>
+                <tr><th>High Severities</th><td>{{ .Summary.High }}</td></tr>
+                <tr><th>Critical Severities</th><td>{{ .Summary.Critical }}</td></tr>
+            </table>
+        </div>
+
+        <div class="vulnerabilities">
+            <h2>Vulnerabilities</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Package</th>
+                        <th>Vulnerability ID</th>
+                        <th>Severity</th>
+                        <th>Description</th>
+                        <th>Fixed Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ range .Results }}
+                    {{ range .Vulnerabilities }}
+                    <tr class="{{ .Severity | toLower }}">
+                        <td>{{ .PkgName }}</td>
+                        <td>{{ .VulnerabilityID }}</td>
+                        <td class="severity">{{ .Severity }}</td>
+                        <td>{{ .Description }}</td>
+                        <td>{{ .FixedVersion }}</td>
+                    </tr>
+                    {{ end }}
+                    {{ end }}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
