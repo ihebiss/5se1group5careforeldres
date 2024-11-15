@@ -40,9 +40,10 @@ public class ProduitServiceTest {
         Produit produit2 = Produit.builder().idProduit(2L).nomproduit("Produit 2").prix(200).prixInitial(120).build();
         Produit produit3 = Produit.builder().idProduit(3L).nomproduit("Produit 3").prix(300).prixInitial(250).build();
 
-        Commande commande1 = new Commande(Arrays.asList(1L, 2L));
-        Commande commande2 = new Commande(Arrays.asList(1L, 3L));
-        Commande commande3 = new Commande(Arrays.asList(1L));
+         Date dateCommande = new Date(); // exemple de date
+        Commande commande1 = new Commande(dateCommande, 150, Arrays.asList(1L, 2L));
+        Commande commande2 = new Commande(dateCommande, 250, Arrays.asList(1L, 3L));
+        Commande commande3 = new Commande(dateCommande, 100, Arrays.asList(1L));
 
 
         when(produitRepository.findById(1L)).thenReturn(Optional.of(produit1));
