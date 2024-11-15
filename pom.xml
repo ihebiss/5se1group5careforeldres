@@ -184,7 +184,22 @@
         <plugins>
 
 
-
+<plugin>
+    <groupId>org.owasp</groupId>
+    <artifactId>dependency-check-maven</artifactId>
+    <version>7.0.4</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>check</goal>
+            </goals>
+        </execution>
+    </executions>
+    <configuration>
+        <formats>HTML</formats>
+        <outputDirectory>${project.build.directory}/dependency-check-report</outputDirectory>
+    </configuration>
+</plugin>
        
  
 
