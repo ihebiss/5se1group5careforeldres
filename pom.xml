@@ -272,16 +272,25 @@
             </plugin>
         </plugins>
     </build>
+
+
+         <repositories>
+    <repository>
+        <id>snyk</id>
+        <url>https://repo.snyk.io/maven/</url>
+    </repository>
+</repositories>
+         
 <distributionManagement>
         <repository>
             <id>deploymentRepo</id>
             <name>Nexus Repository</name>
             <url>http://localhost:8081/repository/maven-releases/</url>
         </repository>
-         <repository>
-    <id>snyk</id>
-    <url>https://repo.snyk.io/maven/</url>
-  </repository>
+
+         
+
+         
         <snapshotRepository>
             <id>deploymentRepo</id>
             <name>snapshots Nexus Repository</name>
