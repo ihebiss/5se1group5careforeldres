@@ -27,7 +27,7 @@ public class Commande implements Serializable {
     @Enumerated(EnumType.STRING)
     private StatutsCom statut;
     @Temporal(TemporalType.DATE)
-    private Date date_commande;
+    private Date datecommande;
     private float montantTotal;
     @Enumerated(EnumType.STRING)
     private ModePay modePay;
@@ -42,5 +42,24 @@ public class Commande implements Serializable {
     @OneToOne(mappedBy="commande")
     @JsonBackReference
     private Panier panier;
+public Commande(Date datecommande, float montantTotal, List<Long> idProduits) {
+        this.datecommande = datecommande;
+        this.montantTotal = montantTotal;
+        this.idProduits = idProduits;
+    }
 
+
+    // Ajout du constructeur qui prend une liste d'ID de produits
+    public Commande(List<Long> idProduits) {
+        this.idProduits = idProduits;
+    }
+
+    // Getters et setters
+    public List<Long> getIdProduits() {
+        return idProduits;
+    }
+
+    public void setIdProduits(List<Long> idProduits) {
+        this.idProduits = idProduits;
+    }
 }
